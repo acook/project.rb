@@ -1,0 +1,18 @@
+source :rubygems
+
+group :test do
+  # open4: external process management
+  # also useful for testing the behaviour of executable scripts
+  gem 'open4'
+
+  # pry: for exploration and debugging
+  gem 'pry'
+
+  # rspec: BDD testing framework
+  gem 'rspec'
+
+  # autotest: for continuous testing
+  gem 'autotest'
+  gem 'autotest-growl'
+  gem 'autotest-fsevent' if RUBY_PLATFORM.include? 'darwin'
+end
