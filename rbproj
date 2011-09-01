@@ -1,8 +1,39 @@
 #!/usr/bin/env ruby
+# pseudocode, just a sketch of ideas
 
 $: << File.join(File.dirname(__FILE__), '/lib')
 
 require 'bundler'
 Bundler.require(:test)
 
-#require ''
+require 'fileutils'
+
+require 'runexe'
+include RunExe
+
+@path = File.dirname(__FILE__)
+@template_path = File.join(@path, 'template')
+@script_path = File.join(@path, 'bash')
+
+parse command options
+set default options
+
+@name = options[:project_name]
+
+FileUtils.cd options[:destination]
+
+template_directory.files.each do |filename|
+  parsed_data = Erb.load File.join(template_path, filename)
+  File.save filename, parsed_data
+end
+
+case options[:scm]
+when :git
+  # prepare the project directory for git
+  bash git_setup, @script_path, :setup_git
+
+  if options[:github] then
+    `bash ./bash/ #{options[:github][:user]}`
+  end
+end
+
